@@ -2,16 +2,18 @@ const { candidata } = require("./candidato.js");
 const { Vaga, vagas } = require("./vagas.js");
 
 class VagaDetalhada extends Vaga {
-  constructor(empresa, cargo, hardskills, softSkills) {
+  constructor(empresa, cargo, hardskills, softskills) {
     super(empresa, cargo, hardskills);
-    this.softSkills = softSkills;
+    this.softskills = softskills;
   }
   exibirVaga() {
     super.exibirVaga();
-    console.log("Soft Skills desejadas: " + this.softSkills.join(", "));
+    console.log("Soft Skills desejadas: " + this.softskills.join(", "));
+    console.log("------------------------");
   }
 }
-const softSkillsPorCargo = {
+
+const softskillsPorCargo = {
   "Desenvolvedor Front-End Júnior": ["comunicação", "trabalho em equipe"],
   "Desenvolvedor Front-End Pleno": [
     "comunicação",
@@ -28,16 +30,20 @@ const softSkillsPorCargo = {
 };
 
 const vagasDetalhadas = vagas.map((vaga) => {
-  const softSkills = softSkillsPorCargo[vaga.cargo] || [];
+  const softskills = softskillsPorCargo[vaga.cargo] || [];
   return new VagaDetalhada(
     vaga.empresa,
     vaga.cargo,
     vaga.hardskills,
-    softSkills,
+    softskills,
   );
 });
 function calcularCompatibilidade(candidata, vaga) {
   const habilidadesVaga = vaga.hardskills;
+
+  if (habilidadesVaga.length === 0) {
+    return 0;
+  }
 
   const requisitosAtendidos = habilidadesVaga.filter((requisito) =>
     candidata.possuiHabilidade(requisito),
@@ -45,21 +51,6 @@ function calcularCompatibilidade(candidata, vaga) {
   return Math.floor(
     (requisitosAtendidos.length / habilidadesVaga.length) * 100,
   );
-}
-function carregarVagas() {
-  return new Promise((resolve, reject) => {
-    console.log("Buscando vagas no servidor...");
-
-    const houveErro = false;
-
-    setTimeout(() => {
-      if (houveErro) {
-        reject(new Error("Falha ao carregar vagas."));
-      } else {
-        resolve(vagasDetalhadas);
-      }
-    }, 1500);
-  });
 }
 
 function classificarCompatibilidade(percentual) {
@@ -72,36 +63,62 @@ function classificarCompatibilidade(percentual) {
   }
 }
 
-function listarFaltantes(candidata, vagasLista) {
-  vagasLista.forEach((vaga) => {
-    const faltantes = vaga.hardskills.filter(
-      (requisito) => !candidata.possuiHabilidade(requisito),
-    );
-    if (faltantes.length > 0) {
-      console.log(
-        `Faltantes para a vaga de ${vaga.cargo}: ${faltantes.join(", ")}`,
-      );
-    } else {
-      console.log(
-        `Parabéns! Você possui todas as habilidades para a vaga de ${vaga.cargo}.`,
-      );
-    }
+function listarFaltantes(candidata, vaga) {
+  const faltantes = vaga.hardskills.filter(
+    (requisito) => !candidata.possuiHabilidade(requisito),
+  );
+  return faltantes;
+}
+
+function carregarVagas() {
+  return new Promise((resolve, reject) => {
+    console.log("Buscando vagas no servidor...");
+
+    const houveErro = false; 
+
+    setTimeout(() => {
+      if (houveErro) {
+        reject(new Error("Falha ao carregar vagas."));
+      } else {
+        resolve(vagasDetalhadas);
+      }
+    }, 1500);
   });
 }
 
+function percorrerVagas(listaDeVagas, fazerParaCadaVaga) {
+  for (let i = 0; i < listaDeVagas.length; i++) {
+    const vaga = listaDeVagas[i];
+    fazerParaCadaVaga(vaga);
+  }
+}
+
+function criarContador() {
+  let total = 0;
+  return () => {
+    total++;
+    return total;
+  };
+}
+
 async function executar() {
+  const proximaAnalise = criarContador();
   let melhorCompatibilidade = 0;
   let melhorVaga = null;
+  const contagemFaltantes = {};
+
   try {
     const vagasDoServidor = await carregarVagas();
-    console.log("===== DADOS DO CANDIDATO =====");
 
+    console.log("===== DADOS DO CANDIDATO =====");
     console.log(`Nome: ${candidata.nome}`);
     console.log(`Área de Interesse: ${candidata.areaInteresse}`);
-
     console.log("=============================");
-    vagasDoServidor.forEach((vaga) => {
+
+    percorrerVagas(vagasDoServidor, (vaga) => {
+      console.log(`Análise #${proximaAnalise()}`);
       vaga.exibirVaga();
+
       const compatibilidade = calcularCompatibilidade(candidata, vaga);
       if (compatibilidade > melhorCompatibilidade) {
         melhorCompatibilidade = compatibilidade;
@@ -110,64 +127,39 @@ async function executar() {
       console.log(
         `Compatibilidade: ${compatibilidade}% - Classificação: ${classificarCompatibilidade(compatibilidade)}`,
       );
-      console.log("------------------------");
+
+      const faltantes = listarFaltantes(candidata, vaga);
+      if (faltantes.length > 0) {
+        console.log(
+          `Faltantes para a vaga de ${vaga.cargo}: ${faltantes.join(", ")}`,
+        );
+      } else {
+        console.log(
+          `Parabéns! Você possui todas as habilidades para a vaga de ${vaga.cargo}.`,
+        );
+      }
+
+      for (const habilidade of faltantes) {
+        contagemFaltantes[habilidade] = (contagemFaltantes[habilidade] || 0) + 1;
+      }
+      console.log("=============================");
     });
-    if (melhorVaga) {
 
-  console.log("\n===== MELHOR VAGA =====");
+    if (melhorVaga !== null) {
+      console.log(
+        `Vaga mais compatível: ${melhorVaga.cargo} (${melhorCompatibilidade}%)`,
+      );
+    }
 
-  console.log(`Empresa: ${melhorVaga.empresa}`);
-  console.log(`Cargo: ${melhorVaga.cargo}`);
-  console.log(
-    `Compatibilidade: ${melhorCompatibilidade}%`
-  );
-  else {
-    console.log("Nenhuma vaga encontrada.");  
-
-}
-    listarFaltantes(candidata, vagasDoServidor);
-   console.log("\n===== MELHOR VAGA =====");
-
-console.log(`Empresa: ${melhorVaga.empresa}`);
-console.log(`Cargo: ${melhorVaga.cargo}`);
-console.log(`Compatibilidade: ${melhorCompatibilidade}%`);
-
-console.log("=======================");
+    console.log("===== RECOMENDAÇÃO DE ESTUDO =====");
+    for (const habilidade in contagemFaltantes) {
+      console.log(
+        `${habilidade}: falta em ${contagemFaltantes[habilidade]} vaga(s)`,
+      );
+    }
   } catch (erro) {
-    console.error("Erro ao carregar vagas:", erro.message);
+    console.log("Erro: " + erro.message);
   }
 }
 
 executar();
-
-function recomendarEstudos(candidata, vagasLista) {
-
-  const tecnologias = {};
-
-  vagasLista.forEach((vaga) => {
-
-    const faltantes = vaga.hardskills.filter(
-      (requisito) =>
-        !candidata.possuiHabilidade(requisito)
-    );
-    const estudos =
-  recomendarEstudos(  candidata,vagasDoServidor); {
-console.log("\n===== PLANO DE ESTUDOS =====");
-    faltantes.forEach((habilidade) => {
-      if (tecnologias[habilidade]) {
-
-        tecnologias[habilidade]++;
-
-      } else {
-
-        tecnologias[habilidade] = 1;
-
-      }
-
-    });
-
-  });
-
-  return tecnologias;
-}
-}

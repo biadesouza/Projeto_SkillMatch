@@ -2,13 +2,13 @@ class Vaga {
   constructor(empresa, cargo, hardskills) {
     this.empresa = empresa;
     this.cargo = cargo;
-    this.hardSkills = hardskills;
+    this.hardskills = hardskills;
   }
 
   exibirVaga() {
     console.log("Empresa: " + this.empresa);
     console.log("Cargo: " + this.cargo);
-    console.log("Habilidades Técnicas: " + this.hardSkills.join(", "));
+    console.log("Habilidades Técnicas: " + this.hardskills.join(", "));
       }
 }
 
