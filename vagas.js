@@ -1,24 +1,51 @@
-const prompt = require('prompt-sync')();
 class Vaga {
-  constructor(empresa, cargo, requisitos) {
+  constructor(empresa, cargo, hardskills) {
     this.empresa = empresa;
     this.cargo = cargo;
-    this.requisitos = requisitos;
+    this.hardSkills = hardskills;
   }
 
   exibirVaga() {
     console.log("Empresa: " + this.empresa);
     console.log("Cargo: " + this.cargo);
-    console.log("Requisitos: " + this.requisitos.join(", "));
-    console.log("------------------------");
-  }
+    console.log("Habilidades Técnicas: " + this.hardSkills.join(", "));
+      }
 }
 
 const vagas = [
-  new Vaga("Hiper Soluções", "Desenvolvedor Front-End", ["JavaScript", "HTML", "CSS", "Lógica de Programação",  "GitHub"]),
-  new Vaga("Brasil Sistemas", "Desenvolvedor Back-End", ["JavaScript","Node.js", "Python", "Java", "PHP", "C#", "GitHub"]),
-  new Vaga("Essencial Labs", "Desenvolvedor Full Stack", ["JavaScript", "Node.js", "React", "Python", "PHP", "HTML", "CSS", "GitHub"]),
+  new Vaga("Essencial Labs", "Desenvolvedor Front-End Júnior", [
+    "JavaScript",
+    "HTML5",
+    "CSS",
+    "Lógica de Programação",
+    "GitHub",
+  ]),
+  new Vaga("Essencial Labs", "Desenvolvedor Front-End Pleno", [
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "HTML5",
+    "CSS",
+    "Lógica de Programação",
+    "GitHub",
+    "Testes",
+  ]),
+  new Vaga("Essencial Labs", "Desenvolvedor Front-End Sênior", [
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Angular",
+    "Vue.js",
+    "Next.js",
+    "SASS",
+    "Node.js",
+    "HTML5",
+    "CSS",
+    "Performance Web",
+    "Lógica de Programação",
+    "GitHub",
+    "Testes",
+  ]),
 ];
-vagas.forEach(vaga => console.log(vaga.empresa + " - " + vaga.cargo + " - Requisitos: " + vaga.requisitos.join(", ")));
 
-module.exports = Vaga;
+module.exports = { Vaga, vagas };
