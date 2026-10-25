@@ -1,44 +1,67 @@
-# Projeto_SkillMatch 
-SkillMatch JS: Simulador de Compatibilidade com Vaga Front-End Júnior.
+## Projeto SkillMatch - Simulador de Compatibilidade com Vagas Front-End
 
-O objetivo do projeto é criar um sistema simples que compare as habilidades de uma pessoa candidata com os requisitos de algumas vagas fictícias de front-end júnior.O projeto poderá ser executado usando o Node.js e a aplicação irá analisar os requisitos abaixo:
+O objetivo do projeto SkillMatch é criar um sistema simples que compare as habilidades de um candidato com os requisitos de diferentes vagas. Através dessa análise, o sistema identifica qual vaga possui a maior compatibilidade e indica o que o candidato deve estudar para aumentar suas chances em futuras oportunidades.
 
-● quais habilidades o candidato possui;
-● quais habilidades cada vaga exige;
-● quais habilidades estão faltando;
-● qual é o percentual de compatibilidade com cada vaga;
-● qual vaga possui maior compatibilidade;
-● qual recomendação de estudo deve ser dada ao candidato.
+# A seguir o que será analisado:
 
-Abaixo seguem algumas outras informações sobre o sistema:
+- quais habilidades o candidato possui;
+- quais habilidades cada vaga exige;
+- quais habilidades estão faltando;
+- qual é o percentual de compatibilidade com cada vaga;
+- qual vaga possui maior compatibilidade;
+- qual recomendação de estudo deve ser dada ao candidato.
 
-● O que o sistema faz e para que serve?
+# Estrutura do Projeto
 
-O sistema verifica, com base nos dados fornecidos pelo candidato, suas experiências e habilidades, e calcula sua compatibilidade com as vagas oferecidas. Com base nesses dados, o setor de RH pode direcioná-lo para a vaga mais adequada ao seu perfil e sugerir o que estudar para melhorar suas chances.
+● candidato.js: contém os dados da candidata; 
+● vagas.js: contém a classe Vaga e as vagas disponíveis;
+● skillmatch.js: arquivo principal responsável pela execução do sistema;
+● README.md: documentação do projeto.
 
-● Como executá-lo, passo a passo, do zero?
+# O que o sistema faz e para que serve?
 
-Para executar será necessário instalar o node.js,clonar o repositório utilizando o link,entrar na pasta cd skillmatch-js e executar o comando node skillmatch.js.
+O sistema utiliza como base a comparação entre as habilidades exigidas pela vaga e as habilidades que o candidato possui. A compatibilidade é calculada dividindo a quantidade de requisitos atendidos pelo total de requisitos da vaga e multiplicando o resultado por 100.
 
-● Qual regra de cálculo da compatibilidade você adotou e por quê?
+# Como executá-lo, passo a passo, do zero?
 
-Adotei uma regra simples onde verifico entre os requisitos da vaga e as minhas habilidades (hard skills). Pego o que tenho de (habilidades) hard skills, divido pelo que a vaga pede e multiplico por 100 para virar %. Com isso comparo o que falta e indico quais habilidades o candidato precisa estudar para se encaixar nas outras vagas.
+Para executar o projeto, é necessário ter o Node.js instalado. Em seguida, clone o repositório, abra-o no VS Code e acesse a pasta do projeto através do terminal:
 
-● Qual critério você usou para priorizar as habilidades na recomendação de estudo?
+cd skillmatch-js
 
-Priorizo indicar a habilidades a estudar com base no que falta na vaga com maior compatibilidade, pois seria a mais fácil para o candidato ser contratado, visando aumentar as chances para as próximas vagas.
+Depois execute:
 
-● Quais conceitos do Módulo 01 você aplicou e onde?
+node skillmatch.js
 
+# Qual regra de cálculo da compatibilidade você adotou e por quê?
 
+Adotei uma regra simples em que o sistema compara os requisitos da vaga com as habilidades técnicas (hard skills) do candidato. Em seguida, divide a quantidade de requisitos atendidos pelo total de requisitos da vaga e multiplica o resultado por 100 para obter o percentual de compatibilidade.
 
+# Qual critério você usou para priorizar as habilidades na recomendação de estudo?
 
+A recomendação de estudos é baseada nas habilidades técnicas que o candidato ainda não possui. O sistema identifica quais requisitos estão faltando e sugere quais tecnologias devem ser estudadas para aumentar a compatibilidade com as demais vagas.
 
-● O que é a arquitetura cliente-servidor e como ela aparece no seu projeto?
+# Quais conceitos do Módulo 01 você aplicou e onde?
+● Variáveis e constantes para armazenamento de dados;
+● Objetos para representar candidata e vagas;
+● Arrays para armazenar listas de habilidades;
+● Funções para cálculo de compatibilidade e recomendações;
+● Estruturas de repetição com forEach();
+● Métodos de arrays como map() e filter();
+● Classes para representar os dados do sistema;
+● Herança (extends) para criar a classe VagaDetalhada a partir da classe Vaga;
+● Importação e exportação de módulos utilizando require() e module.exports;
+● Promises e Async/Await para simular o carregamento das vagas.
 
-A arquitetura cliente-servidor é quando o sistema opera de forma dividida. No front-end (cliente) o usuário insere os dados, como nome, habilidades e experiência. No back-end (servidor) é realizada a operação: ele confere a compatibilidade entre o candidato e as vagas, indica qual vaga é a mais apropriada e sugere opções de estudo para aprimorar conhecimentos.No meu projeto, o cliente coleta o objeto candidato e o servidor cruza com o array vagas e retorna o percentual de match.
+# Como a internet funciona?
+A internet funciona através da comunicação entre dispositivos conectados em rede utilizando protocolos de comunicação, como o TCP/IP. Quando um usuário acessa um sistema, os dados são enviados e recebidos entre cliente e servidor por meio dessa infraestrutura.
 
-● O link do vídeo de apresentação.
+# O que é a arquitetura cliente-servidor e como ela aparece no seu projeto?
 
-● O link do quadro Kanban.
+A arquitetura cliente-servidor é quando o sistema opera de forma dividida. No front-end (cliente), o usuário insere os dados, como nome, habilidades e experiência. No back-end (servidor), é realizada a operação que confere a compatibilidade entre o candidato e as vagas, identifica qual vaga é a mais apropriada e sugere opções de estudo para aprimorar conhecimentos.
+
+Neste projeto, a arquitetura cliente-servidor é simulada utilizando o objeto candidata para representar os dados fornecidos pelo cliente, enquanto o carregamento das vagas simula uma resposta de um servidor através de uma Promise e do uso de Async/Await.
+
+## O link do vídeo de apresentação.
+
+## O link do quadro Kanban.
 https://trello.com/b/LrvqKD0W/projeto-skillmatch
