@@ -1,0 +1,24 @@
+  {
+    "name": "projeto_skillmatch",
+    "version": "1.0.0",
+    "description": "SkillMatch JS: Simulador de Compatibilidade com Vaga Front-End Júnior",
+    "main": "skillmatch.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/biadesouza/Projeto_SkillMatch.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "bugs": {
+      "url": "https://github.com/biadesouza/Projeto_SkillMatch/issues"
+    },
+    "homepage": "https://github.com/biadesouza/Projeto_SkillMatch#readme",
+    "dependencies": {
+      "prompt-sync": "^4.2.0"
+    }
+  }
