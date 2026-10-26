@@ -45,8 +45,8 @@ A recomendação de estudos é baseada nas habilidades técnicas que o candidato
 ● Objetos para representar candidata e vagas;
 ● Arrays para armazenar listas de habilidades;
 ● Funções para cálculo de compatibilidade e recomendações;
-● Estruturas de repetição com forEach();
-● Métodos de arrays como map() e filter();
+● Laços de repetição;
+● Métodos de arrays como: map() e filter();
 ● Classes para representar os dados do sistema;
 ● Herança (extends) para criar a classe VagaDetalhada a partir da classe Vaga;
 ● Importação e exportação de módulos utilizando require() e module.exports;
@@ -62,6 +62,7 @@ A arquitetura cliente-servidor é quando o sistema opera de forma dividida. No f
 Neste projeto, a arquitetura cliente-servidor é simulada utilizando o objeto candidata para representar os dados fornecidos pelo cliente, enquanto o carregamento das vagas simula uma resposta de um servidor através de uma Promise e do uso de Async/Await.
 
 ## O link do vídeo de apresentação.
+https://1drv.ms/v/c/e3c56bc2bf9fec66/IQBEuiYMRcV4RLhXM1VfSetOAV1UCIcIC7oICVWr2GmhCos?e=siaufp
 
 ## O link do quadro Kanban.
 https://trello.com/b/LrvqKD0W/projeto-skillmatch
